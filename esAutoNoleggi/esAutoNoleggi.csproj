@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Code\ADOSQLServer2017.cs" />
     <Compile Include="Controller\clsAutoController.cs" />
     <Compile Include="Controller\clsClientiController.cs" />
     <Compile Include="Controller\clsNoleggiController.cs" />

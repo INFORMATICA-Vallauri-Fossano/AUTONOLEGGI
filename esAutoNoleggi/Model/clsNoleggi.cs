@@ -8,5 +8,6 @@ namespace ES32noleggioAuto.Model
 {
     internal class clsNoleggi
     {
+
     }
 }
