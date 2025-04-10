@@ -1,5 +1,5 @@
 ﻿using System;
-
+using AnrangoRamosLibrary;
 namespace ES32noleggioAuto.Model
 {
     public class clsAuto
@@ -17,7 +17,7 @@ namespace ES32noleggioAuto.Model
             get => targa;
             set
             {
-                if (string.IsNullOrWhiteSpace(value) || value.Length != 7)
+                if (AnrangoRamosLibrary.RegexUtilities.IsValidTarga(value))
                     throw new ArgumentException("Targa must be a non-empty string with exactly 7 characters.");
                 targa = value;
             }

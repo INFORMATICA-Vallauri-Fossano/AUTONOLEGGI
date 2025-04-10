@@ -25,22 +25,55 @@ namespace ES32noleggioAuto.Controller
         /// visualizziamo le automobili disponibili
         /// </summary>
         /// <returns>dataTable</returns>
-       public DataTable GetAllAuto()
+        public DataTable GetAllAuto()
         {
             DataTable dt = new DataTable();
 
-            SqlCommand cmd= new SqlCommand();
+            SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = "SELECT TARGA,MARCA, MODELLO, COLORE,ALIMENTAZIONE, KM ";
-            cmd.CommandText += "FROM AUTOMOBILI, MARCHE, MODELLI, ALIMENTAZIONI "; 
-            cmd.CommandText +="WHERE DISPONIBILE=1 AND MARCHE.IDMARCA= MODELLI.IDMARCA ";
+            cmd.CommandText += "FROM AUTOMOBILI, MARCHE, MODELLI, ALIMENTAZIONI ";
+            cmd.CommandText += "WHERE DISPONIBILE=1 AND MARCHE.IDMARCA= MODELLI.IDMARCA ";
             cmd.CommandText += " AND MODELLI.IDMODELLO=AUTOMOBILI.IDMODELLO ";
             cmd.CommandText += "  AND AUTOMOBILI.idAl = ALIMENTAZIONI.idAl ";
             cmd.CommandText += "ORDER BY TARGA";
-            dt=ado.EseguiQuery(cmd);
+            dt = ado.EseguiQuery(cmd);
+
+            return dt;
+        }
+        public DataTable GetAllModelli()
+        {
+            DataTable dt = new DataTable();
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "SELECT idModello,modello ";
+            cmd.CommandText += "FROM MODELLI";
+            dt = ado.EseguiQuery(cmd);
+
+            return dt;
+        }
+        public DataTable GetAllAlimentazione()
+        {
+            DataTable dt = new DataTable();
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "SELECT idAl,alimentazione ";
+            cmd.CommandText += "FROM alimentazioni";
+            dt = ado.EseguiQuery(cmd);
 
             return dt;
         }
 
+        public void InsertAuto()
+        {
+            string query = "INSERT INTO AUTOMOBILI(TARGA,KM,COLORE,CAMBIOAUTOMATICO,DISPONIBILE,IDMODELLO,IDAL) ";
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "INSERT INTO AUTOMOBILI()";
+            ado.EseguiNonQuery(cmd);
+        }
     }
 }
