@@ -17,7 +17,7 @@ namespace ES32noleggioAuto.Model
             get => targa;
             set
             {
-                if (AnrangoRamosLibrary.RegexUtilities.IsValidTarga(value))
+                if (!AnrangoRamosLibrary.RegexUtilities.IsValidTarga(value))
                     throw new ArgumentException("Targa must be a non-empty string with exactly 7 characters.");
                 targa = value;
             }

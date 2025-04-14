@@ -33,8 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AnrangoRamosLibrary">
-      <HintPath>..\..\AnrangoRamosLibrary\AnrangoRamosLibrary\bin\Debug\AnrangoRamosLibrary.dll</HintPath>
+    <Reference Include="AnrangoRamosLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\INFORMATICA-Vallauri-Fossano\AnrangoRamosLibrary\AnrangoRamosLibrary\bin\Debug\AnrangoRamosLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
