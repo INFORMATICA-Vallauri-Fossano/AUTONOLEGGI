@@ -86,11 +86,11 @@
             this.dgv.AllowUserToResizeColumns = false;
             this.dgv.AllowUserToResizeRows = false;
             this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv.Location = new System.Drawing.Point(12, 12);
+            this.dgv.Location = new System.Drawing.Point(17, 12);
             this.dgv.Name = "dgv";
             this.dgv.ReadOnly = true;
             this.dgv.RowHeadersWidth = 51;
-            this.dgv.Size = new System.Drawing.Size(647, 348);
+            this.dgv.Size = new System.Drawing.Size(771, 348);
             this.dgv.TabIndex = 13;
             // 
             // grbDati
@@ -110,8 +110,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 613);
             this.Controls.Add(this.grbDati);
-            this.Controls.Add(this.dgv);
             this.Controls.Add(this.grbOperazioni);
+            this.Controls.Add(this.dgv);
             this.Name = "frmMaster";
             this.Text = "frmMaster";
             this.grbOperazioni.ResumeLayout(false);
@@ -121,12 +121,11 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnInserimento;
-        private System.Windows.Forms.Button btnEliminazione;
-        private System.Windows.Forms.Button btnModifica;
-        private System.Windows.Forms.GroupBox grbOperazioni;
-        private System.Windows.Forms.DataGridView dgv;
-        private System.Windows.Forms.GroupBox grbDati;
+        public System.Windows.Forms.GroupBox grbOperazioni;
+        public System.Windows.Forms.GroupBox grbDati;
+        public System.Windows.Forms.Button btnInserimento;
+        public System.Windows.Forms.Button btnEliminazione;
+        public System.Windows.Forms.Button btnModifica;
+        public System.Windows.Forms.DataGridView dgv;
     }
 }

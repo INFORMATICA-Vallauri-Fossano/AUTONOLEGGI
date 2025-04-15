@@ -10,10 +10,11 @@ using System.Windows.Forms;
 //
 using esAutoNoleggi.Model;
 using esAutoNoleggi.Controller;
+using esAutoNoleggi.View;
 
 namespace esAutoNoleggi
 {
-    public partial class frmAuto : Form
+    public partial class frmAuto : frmMaster
     {
         clsAutoController autoC;
         clsAuto auto = new clsAuto();
@@ -201,7 +202,7 @@ namespace esAutoNoleggi
             try
             {
                 autoC = new clsAutoController("DB_NoleggioAuto.mdf");
-                dgvAuto.DataSource = autoC.GetAllAuto();
+                dgv.DataSource = autoC.GetAllAuto();
                 ucCmbModello.ElCmb.DataSource = autoC.GetAllModelli();
                 ucCmbModello.ElCmb.DisplayMember = "modello";
                 ucCmbModello.ElCmb.ValueMember = "idModello";
@@ -209,14 +210,13 @@ namespace esAutoNoleggi
                 ucCmbAlimentazione.ElCmb.DisplayMember = "alimentazione";
                 ucCmbAlimentazione.ElCmb.ValueMember = "idAl";
 
-                dgvAuto.AutoResizeColumns();
-                if (dgvAuto.Rows.Count == 0)
+                dgv.AutoResizeColumns();
+                if (dgv.Rows.Count == 0)
                 {
                     MessageBox.Show("AL MOMENTO NON CI SONO AUTO DISPONIBILI");
                 }
 
-                dgvAuto.RowStateChanged += dgvAuto_StateChanged;
-                dgvAuto.CellStateChanged += dgvAuto_StateChanged;
+                dgv.RowEnter += dgv_StateChanged;
             }
             catch (Exception ex)
             {
@@ -229,7 +229,7 @@ namespace esAutoNoleggi
             try
             {
                 autoC.InsertAuto(Targa, Km, Colore, CambioAutomatico, CambioAutomatico, Modello, Alimentazione);
-                dgvAuto.DataSource = autoC.GetAllAuto();
+                dgv.DataSource = autoC.GetAllAuto();
             }
             catch (Exception ex)
             {
@@ -242,7 +242,7 @@ namespace esAutoNoleggi
             try
             {
                 autoC.DeleteAuto(Targa);
-                dgvAuto.DataSource = autoC.GetAllAuto();
+                dgv.DataSource = autoC.GetAllAuto();
 
             }
             catch (Exception ex)
@@ -256,7 +256,7 @@ namespace esAutoNoleggi
             try
             {
                 autoC.EditAuto(Targa, Km, Colore, CambioAutomatico, CambioAutomatico, Modello, Alimentazione);
-                dgvAuto.DataSource = autoC.GetAllAuto();
+                dgv.DataSource = autoC.GetAllAuto();
             }
             catch (Exception ex)
             {
@@ -264,22 +264,16 @@ namespace esAutoNoleggi
             }
         }
 
-        private void dgvAuto_StateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        private void dgv_StateChanged(object sender, DataGridViewCellEventArgs e)
         {
-            int index = e.Row.Index;
+            int index = e.RowIndex;
             setAutoFromDgv(index);
         }
-        private void dgvAuto_StateChanged(object sender, DataGridViewCellStateChangedEventArgs e)
-        {
-            int index = e.Cell.RowIndex;
-            setAutoFromDgv(index);
-        }
-
         private void setAutoFromDgv(int index)
         {
             if (index >= 0)
             {
-                DataGridViewRow selectedRow = dgvAuto.Rows[index];
+                DataGridViewRow selectedRow = dgv.Rows[index];
                 Targa = selectedRow.Cells["TARGA"].Value.ToString();
                 Km = Convert.ToInt32(selectedRow.Cells["KM"].Value);
                 Colore = selectedRow.Cells["COLORE"].Value.ToString();
