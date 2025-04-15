@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using System.Data;   //x oggetti adonet
 using System.Data.SqlClient;
 
-using ES32noleggioAuto.Model;  //x i vari model
+using esAutoNoleggi.Model;  //x i vari model
 using ADOSQLServer2017_ns;     // x metodi eseguiQuery,scalar,nonquery 
 
-namespace ES32noleggioAuto.Controller
+namespace esAutoNoleggi.Controller
 {
     public class clsAutoController
     {

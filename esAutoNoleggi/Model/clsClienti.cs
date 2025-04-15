@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace ES32noleggioAuto.Model
+namespace esAutoNoleggi.Model
 {
     public class clsClienti
     {
@@ -55,7 +55,7 @@ namespace ES32noleggioAuto.Model
             }
         }
 
-        public string EMail
+        public string Email
         {
             get => eMail;
             set
@@ -73,7 +73,7 @@ namespace ES32noleggioAuto.Model
             Cognome = Cognome;
             Nome = Nome;
             Telefono = Telefono;
-            EMail = EMail;
+            Email = Email;
         }
     }
 }

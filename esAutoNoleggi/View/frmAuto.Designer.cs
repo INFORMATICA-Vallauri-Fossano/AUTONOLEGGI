@@ -1,4 +1,4 @@
-﻿namespace ES32noleggioAuto
+﻿namespace esAutoNoleggi
 {
     partial class frmAuto
     {
@@ -128,7 +128,7 @@
             this.grbDati.Size = new System.Drawing.Size(252, 222);
             this.grbDati.TabIndex = 12;
             this.grbDati.TabStop = false;
-            this.grbDati.Text = "OPERAZIONI";
+            this.grbDati.Text = "DATI AUTO";
             // 
             // ucCmbAlimentazione
             // 

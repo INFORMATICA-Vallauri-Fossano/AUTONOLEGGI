@@ -1,6 +1,6 @@
 ﻿using System;
 using AnrangoRamosLibrary;
-namespace ES32noleggioAuto.Model
+namespace esAutoNoleggi.Model
 {
     public class clsAuto
     {

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ADOSQLServer2017_ns;
 
-namespace ES32noleggioAuto.Controller
+namespace esAutoNoleggi.Controller
 {
     internal class clsClientiController
     {
@@ -20,21 +20,19 @@ namespace ES32noleggioAuto.Controller
         /// <summary>
         /// Inserisce un nuovo cliente nel database.
         /// </summary>
-        /// <param name="idCliente">L'ID del cliente.</param>
         /// <param name="cognome">Il cognome del cliente.</param>
         /// <param name="nome">Il nome del cliente.</param>
         /// <param name="telefono">Il numero di telefono del cliente.</param>
         /// <param name="email">L'email del cliente.</param>
-        public void InserisciCliente(int idCliente, string cognome, string nome, string telefono, string email)
+        public void InserisciCliente( string cognome, string nome, string telefono, string email)
         {
-            string query = "INSERT INTO CLIENTI (IDCLIENTE, COGNOME, NOME, TELEFONO, EMAIL) " +
-                           "VALUES (@IDCLIENTE, @COGNOME, @NOME, @TELEFONO, @EMAIL);";
+            string query = "INSERT INTO CLIENTI ( COGNOME, NOME, TELEFONO, EMAIL) " +
+                           "VALUES ( @COGNOME, @NOME, @TELEFONO, @EMAIL);";
 
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = query;
 
-            cmd.Parameters.AddWithValue("@IDCLIENTE", idCliente);
             cmd.Parameters.AddWithValue("@COGNOME", cognome);
             cmd.Parameters.AddWithValue("@NOME", nome);
             cmd.Parameters.AddWithValue("@TELEFONO", telefono);
@@ -122,5 +120,14 @@ namespace ES32noleggioAuto.Controller
             return ado.EseguiQuery(cmd);
         }
 
+        internal void EliminaCliente(int idCliente)
+        {
+            string query = "DELETE FROM CLIENTI WHERE IDCLIENTE = @IDCLIENTE;";
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@IDCLIENTE", idCliente);
+            ado.EseguiNonQuery(cmd);
+        }
     }
 }

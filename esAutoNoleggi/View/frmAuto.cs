@@ -8,11 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 //
-using ES32noleggioAuto.Model;
-using ES32noleggioAuto.Controller;
+using esAutoNoleggi.Model;
+using esAutoNoleggi.Controller;
 
-
-namespace ES32noleggioAuto
+namespace esAutoNoleggi
 {
     public partial class frmAuto : Form
     {

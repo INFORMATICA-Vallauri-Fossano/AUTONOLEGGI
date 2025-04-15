@@ -1,9 +1,10 @@
-﻿using ES32noleggioAuto;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+//
+using esAutoNoleggi.View;
 namespace esAutoNoleggi
 {
     internal static class Program
@@ -16,7 +17,7 @@ namespace esAutoNoleggi
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmAuto());
+            Application.Run(new frmMenu());
         }
     }
 }

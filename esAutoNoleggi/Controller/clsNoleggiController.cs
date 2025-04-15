@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ES32noleggioAuto.Controller
+namespace esAutoNoleggi.Controller
 {
     internal class clsNoleggiController
     {
@@ -23,7 +23,7 @@ namespace ES32noleggioAuto.Controller
         /// <param name="idCliente">L'ID del cliente che noleggia l'auto.</param>
         /// <param name="targa">La targa dell'auto noleggiata.</param>
         /// <param name="dataInizio">La data di inizio del noleggio.</param>
-        public void InserisciNoleggio(int idCliente, string targa, DateTime dataInizio)
+        public void InserisciNoleggio(int idCliente, string targa, DateTime dataInizio, DateTime? dataFine)
         {
             // Inserire il noleggio
             string queryNoleggio = "INSERT INTO NOLEGGI (IDCLIENTE, TARGA, DATAINIZIO, DATAFINE) " +
@@ -54,7 +54,7 @@ namespace ES32noleggioAuto.Controller
         /// </summary>
         /// <param name="idNoleggio">L'ID del noleggio da terminare.</param>
         /// <param name="dataFine">La data di fine del noleggio.</param>
-        public void TerminaNoleggio(int idNoleggio, DateTime dataFine)
+        public void TerminaNoleggio(int idNoleggio, DateTime? dataFine)
         {
             // Aggiornare la data di fine del noleggio
             string queryNoleggio = "UPDATE NOLEGGI SET DATAFINE = @DATAFINE WHERE IDNOLEGGIO = @IDNOLEGGIO;";
@@ -88,5 +88,34 @@ namespace ES32noleggioAuto.Controller
             ado.EseguiNonQuery(cmdDisponibilita);
         }
 
+        internal object GetAllAutoDisponibili()
+        {
+            string query = "SELECT TARGA FROM AUTOMOBILI WHERE DISPONIBILE = 1;";
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = query;
+            DataTable dt = ado.EseguiQuery(cmd);
+            return dt;
+        }
+
+        internal object GetAllClienti()
+        {
+            string query = "SELECT IDCLIENTE, COGNOME + ' ' + NOME AS NOME FROM CLIENTI;";
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = query;
+            DataTable dt = ado.EseguiQuery(cmd);
+            return dt;
+        }
+
+        internal DataTable GetAllNoleggi()
+        {
+            string query = "SELECT * FROM NOLEGGI;";
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = query;
+            DataTable dt = ado.EseguiQuery(cmd);
+            return dt;
+        }
     }
 }
