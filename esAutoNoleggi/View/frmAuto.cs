@@ -14,6 +14,7 @@ using esAutoNoleggi.View;
 
 namespace esAutoNoleggi
 {
+    
     public partial class frmAuto : frmMaster
     {
         clsAutoController autoC;
@@ -201,7 +202,7 @@ namespace esAutoNoleggi
         {
             try
             {
-                autoC = new clsAutoController("DB_NoleggioAuto.mdf");
+                autoC = new clsAutoController(useful.databaseName);
                 dgv.DataSource = autoC.GetAllAuto();
                 ucCmbModello.ElCmb.DataSource = autoC.GetAllModelli();
                 ucCmbModello.ElCmb.DisplayMember = "modello";

@@ -8,8 +8,12 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
-namespace ADOSQLServer2017_ns
+namespace esAutoNoleggi
 {
+    static class useful
+    {
+        public static string databaseName = "noleggi.mdf";
+    }
     class ADOSQLServer2017
     {
         private SqlConnection cn;

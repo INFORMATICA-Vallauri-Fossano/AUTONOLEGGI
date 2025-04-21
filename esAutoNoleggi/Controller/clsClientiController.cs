@@ -5,7 +5,6 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ADOSQLServer2017_ns;
 
 namespace esAutoNoleggi.Controller
 {

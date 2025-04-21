@@ -8,7 +8,6 @@ using System.Data;   //x oggetti adonet
 using System.Data.SqlClient;
 
 using esAutoNoleggi.Model;  //x i vari model
-using ADOSQLServer2017_ns;     // x metodi eseguiQuery,scalar,nonquery 
 
 namespace esAutoNoleggi.Controller
 {

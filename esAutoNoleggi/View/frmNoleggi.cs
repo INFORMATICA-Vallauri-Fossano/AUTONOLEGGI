@@ -175,7 +175,7 @@ namespace esAutoNoleggi
         {
             try
             {
-                noleggiC = new clsNoleggiController("DB_NoleggioAuto.mdf");
+                noleggiC = new clsNoleggiController(useful.databaseName);
 
                 // Load data into DataGridView
                 dgvNoleggi.DataSource = noleggiC.GetAllNoleggi();

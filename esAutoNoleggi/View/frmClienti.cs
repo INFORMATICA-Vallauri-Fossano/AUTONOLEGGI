@@ -173,7 +173,7 @@ namespace esAutoNoleggi
         {
             try
             {
-                clientiC = new clsClientiController("DB_NoleggioAuto.mdf");
+                clientiC = new clsClientiController(useful.databaseName);
                 dgvClienti.DataSource = clientiC.VisualizzaTuttiClienti();
 
                 dgvClienti.AutoResizeColumns();
