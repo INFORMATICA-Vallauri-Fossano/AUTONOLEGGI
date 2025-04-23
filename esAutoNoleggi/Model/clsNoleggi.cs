@@ -52,7 +52,7 @@ using System.Threading.Tasks;
                 get => dataInizio;
                 set
                 {
-                    if (value.CompareTo(default)>0)
+                    if (value.CompareTo(default)<0)
                         throw new ArgumentException("DataInizio must be a valid date.");
                     dataInizio = value;
                 }

@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using esAutoNoleggi.Controller;
 //
 using esAutoNoleggi.Model;
-using esAutoNoleggi.Controller;
+using esAutoNoleggi.View;
+using System;
+using System.Windows.Forms;
 
 
 namespace esAutoNoleggi
 {
-    public partial class frmNoleggi : Form
+    public partial class frmNoleggi : frmMaster
     {
         clsNoleggiController noleggiC;
         clsNoleggi noleggio = new clsNoleggi();
@@ -124,7 +118,7 @@ namespace esAutoNoleggi
                 try
                 {
                     noleggio.DataInizio = value;
-                    ucTxtDataInizio.Text = noleggio.DataInizio.ToString("yyyy-MM-dd");
+                    ucTxtDataInizio.Text = noleggio.DataInizio.ToString("dd/MM/yyyy");
                 }
                 catch (Exception ex)
                 {
@@ -140,7 +134,7 @@ namespace esAutoNoleggi
                 try
                 {
                     noleggio.DataFine = string.IsNullOrWhiteSpace(ucTxtDataFine.Text)
-                        ? (DateTime?)null
+                        ? DateTime.Now
                         : Convert.ToDateTime(ucTxtDataFine.Text);
                     return noleggio.DataFine;
                 }
@@ -156,7 +150,7 @@ namespace esAutoNoleggi
                 {
                     noleggio.DataFine = value;
                     ucTxtDataFine.Text = noleggio.DataFine.HasValue
-                        ? noleggio.DataFine.Value.ToString("yyyy-MM-dd")
+                        ? noleggio.DataFine.Value.ToString("dd/MM/yyyy")
                         : string.Empty;
                 }
                 catch (Exception ex)
@@ -178,7 +172,7 @@ namespace esAutoNoleggi
                 noleggiC = new clsNoleggiController(useful.databaseName);
 
                 // Load data into DataGridView
-                dgvNoleggi.DataSource = noleggiC.GetAllNoleggi();
+                dgv.DataSource = noleggiC.GetAllNoleggi();
 
                 // Load data into combo boxes
                 ucCmbIdCliente.ElCmb.DataSource = noleggiC.GetAllClienti();
@@ -189,16 +183,15 @@ namespace esAutoNoleggi
                 ucCmbTarga.ElCmb.DisplayMember = "Targa";
                 ucCmbTarga.ElCmb.ValueMember = "Targa";
 
-                dgvNoleggi.AutoResizeColumns();
+                dgv.AutoResizeColumns();
 
-                if (dgvNoleggi.Rows.Count == 0)
+                if (dgv.Rows.Count == 0)
                 {
                     MessageBox.Show("AL MOMENTO NON CI SONO NOLEGGI DISPONIBILI");
                 }
 
                 // Attach events
-                dgvNoleggi.RowStateChanged += dgvNoleggi_StateChanged;
-                dgvNoleggi.CellStateChanged += dgvNoleggi_StateChanged;
+                dgv.RowEnter += dgv_RowEnter;
             }
             catch (Exception ex)
             {
@@ -206,23 +199,11 @@ namespace esAutoNoleggi
             }
         }
 
-        private void dgvNoleggi_StateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
-        {
-            int index = e.Row.Index;
-            SetNoleggioFromDgv(index);
-        }
-
-        private void dgvNoleggi_StateChanged(object sender, DataGridViewCellStateChangedEventArgs e)
-        {
-            int index = e.Cell.RowIndex;
-            SetNoleggioFromDgv(index);
-        }
-
-        private void SetNoleggioFromDgv(int index)
+        override protected void setDgv(int index)
         {
             if (index >= 0)
             {
-                DataGridViewRow selectedRow = dgvNoleggi.Rows[index];
+                DataGridViewRow selectedRow = dgv.Rows[index];
                 IdNoleggio = Convert.ToInt32(selectedRow.Cells["IdNoleggio"].Value);
                 DataInizio = Convert.ToDateTime(selectedRow.Cells["DataInizio"].Value);
                 DataFine = selectedRow.Cells["DataFine"].Value == DBNull.Value
@@ -236,7 +217,7 @@ namespace esAutoNoleggi
         private void btnTermina_Click(object sender, EventArgs e)
         {
             noleggiC.TerminaNoleggio(IdNoleggio, DataFine);
-            dgvNoleggi.DataSource = noleggiC.GetAllNoleggi();
+            dgv.DataSource = noleggiC.GetAllNoleggi();
         }
 
         private void btnInserire_Click(object sender, EventArgs e)

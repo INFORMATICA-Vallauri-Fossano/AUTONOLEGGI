@@ -10,10 +10,11 @@ using System.Windows.Forms;
 //
 using esAutoNoleggi.Model;
 using esAutoNoleggi.Controller;
+using esAutoNoleggi.View;
 
 namespace esAutoNoleggi
 {
-    public partial class frmClienti : Form
+    public partial class frmClienti : frmMaster
     {
         clsClientiController clientiC;
         clsClienti cliente = new clsClienti();
@@ -174,16 +175,14 @@ namespace esAutoNoleggi
             try
             {
                 clientiC = new clsClientiController(useful.databaseName);
-                dgvClienti.DataSource = clientiC.VisualizzaTuttiClienti();
+                dgv.DataSource = clientiC.VisualizzaTuttiClienti();
 
-                dgvClienti.AutoResizeColumns();
-                if (dgvClienti.Rows.Count == 0)
+                dgv.AutoResizeColumns();
+                if (dgv.Rows.Count == 0)
                 {
                     MessageBox.Show("AL MOMENTO NON CI SONO CLIENTI DISPONIBILI");
                 }
-
-                dgvClienti.RowStateChanged += dgvAuto_StateChanged;
-                dgvClienti.CellStateChanged += dgvAuto_StateChanged;
+                dgv.RowEnter += dgv_RowEnter;
             }
             catch (Exception ex)
             {
@@ -196,7 +195,7 @@ namespace esAutoNoleggi
             try
             {
                 clientiC.InserisciCliente(Cognome, Nome, Telefono, Email);
-                dgvClienti.DataSource = clientiC.VisualizzaTuttiClienti();
+                dgv.DataSource = clientiC.VisualizzaTuttiClienti();
 
             }
             catch (Exception ex)
@@ -210,7 +209,7 @@ namespace esAutoNoleggi
             try
             {
                 clientiC.EliminaCliente(IdCliente);
-                dgvClienti.DataSource = clientiC.VisualizzaTuttiClienti();
+                dgv.DataSource = clientiC.VisualizzaTuttiClienti();
 
             }
             catch (Exception ex)
@@ -224,7 +223,7 @@ namespace esAutoNoleggi
             try
             {
                 clientiC.ModificaCliente(IdCliente, Cognome, Nome, Telefono, Email);
-                dgvClienti.DataSource = clientiC.VisualizzaTuttiClienti();
+                dgv.DataSource = clientiC.VisualizzaTuttiClienti();
             }
             catch (Exception ex)
             {
@@ -232,22 +231,12 @@ namespace esAutoNoleggi
             }
         }
 
-        private void dgvAuto_StateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
-        {
-            int index = e.Row.Index;
-            setAutoFromDgv(index);
-        }
-        private void dgvAuto_StateChanged(object sender, DataGridViewCellStateChangedEventArgs e)
-        {
-            int index = e.Cell.RowIndex;
-            setAutoFromDgv(index);
-        }
 
-        private void setAutoFromDgv(int index)
+        override protected void setDgv(int index)
         {
             if (index >= 0)
             {
-                DataGridViewRow selectedRow = dgvClienti.Rows[index];
+                DataGridViewRow selectedRow = dgv.Rows[index];
                 IdCliente = Convert.ToInt32(selectedRow.Cells["IDCLIENTE"].Value);
                 Cognome = selectedRow.Cells["COGNOME"].Value.ToString();
                 Nome = selectedRow.Cells["NOME"].Value.ToString();

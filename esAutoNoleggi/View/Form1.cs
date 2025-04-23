@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace esAutoNoleggi.View
 {
-    public partial class frmAuto2 : frmMaster
+    public partial class Form1 : Form
     {
-        public frmAuto2()
+        public Form1()
         {
             InitializeComponent();
         }

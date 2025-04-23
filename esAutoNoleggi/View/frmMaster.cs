@@ -17,6 +17,11 @@ namespace esAutoNoleggi.View
             InitializeComponent();
         }
 
-       
+        protected void dgv_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            int index = e.RowIndex;
+            setDgv(index);
+        }
+        virtual protected void setDgv(int index) { }
     }
 }

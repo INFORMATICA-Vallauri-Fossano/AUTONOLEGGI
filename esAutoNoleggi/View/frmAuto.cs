@@ -216,8 +216,7 @@ namespace esAutoNoleggi
                 {
                     MessageBox.Show("AL MOMENTO NON CI SONO AUTO DISPONIBILI");
                 }
-
-                dgv.RowEnter += dgv_StateChanged;
+                dgv.RowEnter += dgv_RowEnter;
             }
             catch (Exception ex)
             {
@@ -265,12 +264,8 @@ namespace esAutoNoleggi
             }
         }
 
-        private void dgv_StateChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            int index = e.RowIndex;
-            setAutoFromDgv(index);
-        }
-        private void setAutoFromDgv(int index)
+        
+        override protected void setDgv(int index)
         {
             if (index >= 0)
             {
