@@ -24,6 +24,16 @@ namespace esAutoNoleggi.Controller
         /// <param name="dataInizio">La data di inizio del noleggio.</param>
         public void InserisciNoleggio(int idCliente, string targa, DateTime dataInizio, DateTime? dataFine)
         {
+            //controllare la disponibilità
+            string queryDisponibile = "SELECT COUNT(*) FROM AUTOMOBILI WHERE TARGA=@targa AND DISPONIBILE=1";
+            
+            SqlCommand cmdDisponibile= new SqlCommand();
+            cmdDisponibile.CommandType = CommandType.Text;
+            cmdDisponibile.CommandText = queryDisponibile;
+
+            cmdDisponibile.Parameters.AddWithValue("@targa", targa);
+
+            if (!(bool)ado.EseguiScalar(cmdDisponibile)) throw new Exception("L'auto non è disponibile per il noleggio");
             // Inserire il noleggio
             string queryNoleggio = "INSERT INTO NOLEGGI (IDCLIENTE, TARGA, DATAINIZIO, DATAFINE) " +
                                    "VALUES (@IDCLIENTE, @TARGA, @DATAINIZIO, NULL);";

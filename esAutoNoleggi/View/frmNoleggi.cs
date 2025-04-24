@@ -15,25 +15,12 @@ namespace esAutoNoleggi
 
         public int IdNoleggio
         {
-            get
-            {
-                try
-                {
-                    noleggio.IdNoleggio = Convert.ToInt32(ucTxtIdNoleggio.Text);
-                    return noleggio.IdNoleggio;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in IdNoleggio");
-                    return 0; // Return a default value in case of an error
-                }
-            }
+            get => noleggio.IdNoleggio;
             set
             {
                 try
                 {
                     noleggio.IdNoleggio = value;
-                    ucTxtIdNoleggio.Text = noleggio.IdNoleggio.ToString();
                 }
                 catch (Exception ex)
                 {
@@ -216,13 +203,28 @@ namespace esAutoNoleggi
 
         private void btnTermina_Click(object sender, EventArgs e)
         {
-            noleggiC.TerminaNoleggio(IdNoleggio, DataFine);
-            dgv.DataSource = noleggiC.GetAllNoleggi();
+            try
+            {
+                noleggiC.TerminaNoleggio(IdNoleggio, DataFine);
+                dgv.DataSource = noleggiC.GetAllNoleggi();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnInserire_Click(object sender, EventArgs e)
         {
-            noleggiC.InserisciNoleggio(IdCliente,IdTarga,DataInizio,DataFine);
+            try
+            {
+                noleggiC.InserisciNoleggio(IdCliente,IdTarga,DataInizio,DataFine);
+                dgv.DataSource = noleggiC.GetAllNoleggi();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 

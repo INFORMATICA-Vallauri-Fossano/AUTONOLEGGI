@@ -40,6 +40,22 @@ namespace esAutoNoleggi.Controller
 
             return dt;
         }
+        public bool TargaExists(string targa)
+        {
+            DataTable dt = new DataTable();
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "SELECT TARGA ";
+            cmd.CommandText += "FROM AUTOMOBILI ";
+            cmd.CommandText += "WHERE TARGA = @targa";
+            cmd.Parameters.AddWithValue("@targa", targa);
+            dt = ado.EseguiQuery(cmd);
+
+            bool exists=(dt.Rows.Count==1)? true:false;   
+
+            return exists;
+        }
         public DataTable GetAllModelli()
         {
             DataTable dt = new DataTable();
@@ -67,6 +83,9 @@ namespace esAutoNoleggi.Controller
 
         public void InsertAuto(string targa, int km, string colore, bool cambioAutomatico, bool disponibile, int idModello, int idAl)
         {
+            if (TargaExists(targa))
+                throw new Exception("Targa dell'auto già presente");
+
             // Construct the SQL INSERT query with parameter placeholders
             string query = "INSERT INTO AUTOMOBILI (TARGA, KM, COLORE, CAMBIOAUTOMATICO, DISPONIBILE, IDMODELLO, IDAL) " +
                            "VALUES (@TARGA, @KM, @COLORE, @CAMBIOAUTOMATICO, @DISPONIBILE, @IDMODELLO, @IDAL);";
