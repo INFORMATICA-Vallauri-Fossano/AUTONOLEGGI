@@ -228,7 +228,7 @@ namespace esAutoNoleggi
         {
             try
             {
-                autoC.InsertAuto(Targa, Km, Colore, CambioAutomatico, CambioAutomatico, Modello, Alimentazione);
+                autoC.InsertAuto(Targa, Km, Colore, CambioAutomatico, true, Modello, Alimentazione);
                 dgv.DataSource = autoC.GetAllAuto();
             }
             catch (Exception ex)

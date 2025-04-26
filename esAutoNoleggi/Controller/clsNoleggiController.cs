@@ -33,10 +33,10 @@ namespace esAutoNoleggi.Controller
 
             cmdDisponibile.Parameters.AddWithValue("@targa", targa);
 
-            if (!(bool)ado.EseguiScalar(cmdDisponibile)) throw new Exception("L'auto non è disponibile per il noleggio");
+            if (Convert.ToInt32(ado.EseguiScalar(cmdDisponibile))==0) throw new Exception("L'auto non è disponibile per il noleggio");
             // Inserire il noleggio
             string queryNoleggio = "INSERT INTO NOLEGGI (IDCLIENTE, TARGA, DATAINIZIO, DATAFINE) " +
-                                   "VALUES (@IDCLIENTE, @TARGA, @DATAINIZIO, NULL);";
+                                   "VALUES (@IDCLIENTE, @TARGA, @DATAINIZIO, @DATAFINE);";
 
             SqlCommand cmdNoleggio = new SqlCommand();
             cmdNoleggio.CommandType = CommandType.Text;
@@ -45,18 +45,22 @@ namespace esAutoNoleggi.Controller
             cmdNoleggio.Parameters.AddWithValue("@IDCLIENTE", idCliente);
             cmdNoleggio.Parameters.AddWithValue("@TARGA", targa);
             cmdNoleggio.Parameters.AddWithValue("@DATAINIZIO", dataInizio);
+            cmdNoleggio.Parameters.AddWithValue("@DATAFINE", dataFine);
 
             ado.EseguiNonQuery(cmdNoleggio);
 
-            // Aggiornare la disponibilità dell'auto
-            string queryDisponibilita = "UPDATE AUTOMOBILI SET DISPONIBILE = 0 WHERE TARGA = @TARGA;";
-            SqlCommand cmdDisponibilita = new SqlCommand();
-            cmdDisponibilita.CommandType = CommandType.Text;
-            cmdDisponibilita.CommandText = queryDisponibilita;
+            // Aggiornare la disponibilità dell'auto se la datafine  è nulla
+            if (dataFine==null)
+            {
+                string queryDisponibilita = "UPDATE AUTOMOBILI SET DISPONIBILE = 0 WHERE TARGA = @TARGA;";
+                SqlCommand cmdDisponibilita = new SqlCommand();
+                cmdDisponibilita.CommandType = CommandType.Text;
+                cmdDisponibilita.CommandText = queryDisponibilita;
 
-            cmdDisponibilita.Parameters.AddWithValue("@TARGA", targa);
+                cmdDisponibilita.Parameters.AddWithValue("@TARGA", targa);
+                ado.EseguiNonQuery(cmdDisponibilita);
+            }
 
-            ado.EseguiNonQuery(cmdDisponibilita);
         }
         /// <summary>
         /// Termina un noleggio aggiornando la data di fine e la disponibilità dell'auto.
@@ -65,6 +69,16 @@ namespace esAutoNoleggi.Controller
         /// <param name="dataFine">La data di fine del noleggio.</param>
         public void TerminaNoleggio(int idNoleggio, DateTime? dataFine)
         {
+            //controllare se il noleggio era già terminato
+            string queryControllo = "SELECT COUNT(*) FROM NOLEGGI WHERE IDNOLEGGIO=@IDNOLEGGIO AND DATAFINE IS NOT NULL";
+            SqlCommand cmdControllo = new SqlCommand();
+            cmdControllo.CommandType = CommandType.Text;
+            cmdControllo.CommandText = queryControllo;
+            
+            cmdControllo.Parameters.AddWithValue("@IDNOLEGGIO", idNoleggio);
+
+            if(Convert.ToInt32(ado.EseguiScalar(cmdControllo)) > 0) throw new Exception("Il noleggio è già terminato");
+
             // Aggiornare la data di fine del noleggio
             string queryNoleggio = "UPDATE NOLEGGI SET DATAFINE = @DATAFINE WHERE IDNOLEGGIO = @IDNOLEGGIO;";
             SqlCommand cmdNoleggio = new SqlCommand();
@@ -100,6 +114,15 @@ namespace esAutoNoleggi.Controller
         internal object GetAllAutoDisponibili()
         {
             string query = "SELECT TARGA FROM AUTOMOBILI WHERE DISPONIBILE = 1;";
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = query;
+            DataTable dt = ado.EseguiQuery(cmd);
+            return dt;
+        }
+        internal object GetAllAuto()
+        {
+            string query = "SELECT TARGA FROM AUTOMOBILI;";
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = query;

@@ -63,8 +63,9 @@ using System.Threading.Tasks;
                 get => dataFine;
                 set
                 {
-                    if (value.HasValue && value.Value < dataInizio)
-                        throw new ArgumentException("DataFine cannot be earlier than DataInizio.");
+                    if(value != null)
+                        if (value.Value < dataInizio)
+                            throw new ArgumentException("DataFine cannot be earlier than DataInizio.");
                     dataFine = value;
                 }
             }

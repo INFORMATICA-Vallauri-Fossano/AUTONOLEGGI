@@ -32,21 +32,34 @@
             this.ucTxtDataInizio = new AnrangoRamosLibrary.UCTxt();
             this.ucCmbTarga = new AnrangoRamosLibrary.UCCmb();
             this.ucCmbIdCliente = new AnrangoRamosLibrary.UCCmb();
+            this.btnInizioNow = new System.Windows.Forms.Button();
+            this.btnFineNow = new System.Windows.Forms.Button();
+            this.lblIdNoleggio = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.grbOperazioni.SuspendLayout();
             this.grbDati.SuspendLayout();
             this.SuspendLayout();
             // 
             // grbOperazioni
             // 
+            this.grbOperazioni.Controls.Add(this.label1);
+            this.grbOperazioni.Controls.Add(this.lblIdNoleggio);
             this.grbOperazioni.Size = new System.Drawing.Size(130, 160);
+            this.grbOperazioni.Controls.SetChildIndex(this.lblIdNoleggio, 0);
+            this.grbOperazioni.Controls.SetChildIndex(this.btnModifica, 0);
+            this.grbOperazioni.Controls.SetChildIndex(this.btnEliminazione, 0);
+            this.grbOperazioni.Controls.SetChildIndex(this.btnInserimento, 0);
+            this.grbOperazioni.Controls.SetChildIndex(this.label1, 0);
             // 
             // grbDati
             // 
+            this.grbDati.Controls.Add(this.btnFineNow);
+            this.grbDati.Controls.Add(this.btnInizioNow);
             this.grbDati.Controls.Add(this.ucTxtDataFine);
             this.grbDati.Controls.Add(this.ucTxtDataInizio);
             this.grbDati.Controls.Add(this.ucCmbTarga);
             this.grbDati.Controls.Add(this.ucCmbIdCliente);
-            this.grbDati.Size = new System.Drawing.Size(252, 160);
+            this.grbDati.Size = new System.Drawing.Size(329, 160);
             // 
             // btnInserimento
             // 
@@ -60,6 +73,7 @@
             // btnModifica
             // 
             this.btnModifica.Enabled = false;
+            this.btnModifica.Location = new System.Drawing.Point(5, 132);
             // 
             // ucTxtDataFine
             // 
@@ -93,6 +107,44 @@
             this.ucCmbIdCliente.Size = new System.Drawing.Size(231, 28);
             this.ucCmbIdCliente.TabIndex = 30;
             // 
+            // btnInizioNow
+            // 
+            this.btnInizioNow.Location = new System.Drawing.Point(242, 86);
+            this.btnInizioNow.Name = "btnInizioNow";
+            this.btnInizioNow.Size = new System.Drawing.Size(54, 23);
+            this.btnInizioNow.TabIndex = 34;
+            this.btnInizioNow.Text = "NOW";
+            this.btnInizioNow.UseVisualStyleBackColor = true;
+            this.btnInizioNow.Click += new System.EventHandler(this.btnInizioNow_Click);
+            // 
+            // btnFineNow
+            // 
+            this.btnFineNow.Location = new System.Drawing.Point(242, 120);
+            this.btnFineNow.Name = "btnFineNow";
+            this.btnFineNow.Size = new System.Drawing.Size(54, 23);
+            this.btnFineNow.TabIndex = 35;
+            this.btnFineNow.Text = "NOW";
+            this.btnFineNow.UseVisualStyleBackColor = true;
+            this.btnFineNow.Click += new System.EventHandler(this.btnFineNow_Click);
+            // 
+            // lblIdNoleggio
+            // 
+            this.lblIdNoleggio.Location = new System.Drawing.Point(31, 86);
+            this.lblIdNoleggio.Name = "lblIdNoleggio";
+            this.lblIdNoleggio.Size = new System.Drawing.Size(89, 23);
+            this.lblIdNoleggio.TabIndex = 4;
+            this.lblIdNoleggio.Text = "XX";
+            this.lblIdNoleggio.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 91);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(18, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "ID";
+            // 
             // frmNoleggi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -102,6 +154,7 @@
             this.Text = "GESTIONE AUTOMOBILI DEL NOLEGGIO";
             this.Load += new System.EventHandler(this.frmNoleggi_Load);
             this.grbOperazioni.ResumeLayout(false);
+            this.grbOperazioni.PerformLayout();
             this.grbDati.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -113,6 +166,10 @@
         private AnrangoRamosLibrary.UCTxt ucTxtDataInizio;
         private AnrangoRamosLibrary.UCCmb ucCmbTarga;
         private AnrangoRamosLibrary.UCCmb ucCmbIdCliente;
+        private System.Windows.Forms.Button btnFineNow;
+        private System.Windows.Forms.Button btnInizioNow;
+        private System.Windows.Forms.Label lblIdNoleggio;
+        private System.Windows.Forms.Label label1;
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using esAutoNoleggi.Controller;
+﻿using AnrangoRamosLibrary;
+using esAutoNoleggi.Controller;
 //
 using esAutoNoleggi.Model;
 using esAutoNoleggi.View;
@@ -18,70 +19,36 @@ namespace esAutoNoleggi
             get => noleggio.IdNoleggio;
             set
             {
-                try
-                {
-                    noleggio.IdNoleggio = value;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in IdNoleggio");
-                }
+                noleggio.IdNoleggio = value;
+                lblIdNoleggio.Text = noleggio.IdNoleggio.ToString();
             }
         }
         public int IdCliente
         {
             get
             {
-                try
-                {
                     noleggio.IdCliente = Convert.ToInt32(ucCmbIdCliente.ElCmb.SelectedValue);
                     return noleggio.IdCliente;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in IdCliente");
-                    return 0; // Return a default value in case of an error
-                }
             }
             set
             {
-                try
-                {
                     noleggio.IdCliente = value;
                     ucCmbIdCliente.ElCmb.SelectedValue = noleggio.IdCliente;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in IdCliente");
-                }
             }
         }
         public string IdTarga
         {
             get
             {
-                try
-                {
+                    if (ucCmbTarga.ElCmb.Text == "")
+                        throw new Exception("Scegliere una targa disponibile");
                     noleggio.Targa = ucCmbTarga.ElCmb.SelectedValue.ToString();
                     return noleggio.Targa;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in IdTarga");
-                    return null; // Return a default value in case of an error
-                }
             }
             set
             {
-                try
-                {
                     noleggio.Targa = value.ToString();
                     ucCmbTarga.ElCmb.SelectedValue = noleggio.Targa;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in IdTarga");
-                }
             }
         }
 
@@ -89,28 +56,15 @@ namespace esAutoNoleggi
         {
             get
             {
-                try
-                {
-                    noleggio.DataInizio = Convert.ToDateTime(ucTxtDataInizio.Text);
+                if (string.IsNullOrWhiteSpace(ucTxtDataInizio.Text))
+                    throw new Exception("Scrivere una data di inizio");
+                noleggio.DataInizio = Convert.ToDateTime(ucTxtDataInizio.Text);
                     return noleggio.DataInizio;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in DataInizio");
-                    return DateTime.MinValue; // Return a default value in case of an error
-                }
             }
             set
             {
-                try
-                {
                     noleggio.DataInizio = value;
                     ucTxtDataInizio.Text = noleggio.DataInizio.ToString("dd/MM/yyyy");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in DataInizio");
-                }
             }
         }
 
@@ -118,18 +72,10 @@ namespace esAutoNoleggi
         {
             get
             {
-                try
-                {
                     noleggio.DataFine = string.IsNullOrWhiteSpace(ucTxtDataFine.Text)
-                        ? DateTime.Now
+                        ? (DateTime?)null
                         : Convert.ToDateTime(ucTxtDataFine.Text);
                     return noleggio.DataFine;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in DataFine");
-                    return null; // Return a default value in case of an error
-                }
             }
             set
             {
@@ -166,9 +112,7 @@ namespace esAutoNoleggi
                 ucCmbIdCliente.ElCmb.DisplayMember = "NOME";
                 ucCmbIdCliente.ElCmb.ValueMember = "IDCLIENTE";
 
-                ucCmbTarga.ElCmb.DataSource = noleggiC.GetAllAutoDisponibili();
-                ucCmbTarga.ElCmb.DisplayMember = "Targa";
-                ucCmbTarga.ElCmb.ValueMember = "Targa";
+                caricaTargheDisponibili();
 
                 dgv.AutoResizeColumns();
 
@@ -179,6 +123,7 @@ namespace esAutoNoleggi
 
                 // Attach events
                 dgv.RowEnter += dgv_RowEnter;
+
             }
             catch (Exception ex)
             {
@@ -205,6 +150,8 @@ namespace esAutoNoleggi
         {
             try
             {
+                if (ucTxtDataFine.Text == "")
+                    throw new Exception("Scrivere una data di fine");
                 noleggiC.TerminaNoleggio(IdNoleggio, DataFine);
                 dgv.DataSource = noleggiC.GetAllNoleggi();
             }
@@ -218,13 +165,36 @@ namespace esAutoNoleggi
         {
             try
             {
-                noleggiC.InserisciNoleggio(IdCliente,IdTarga,DataInizio,DataFine);
+                noleggiC.InserisciNoleggio(IdCliente, IdTarga, DataInizio, DataFine);
                 dgv.DataSource = noleggiC.GetAllNoleggi();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void caricaTargheDisponibili()
+        {
+            ucCmbTarga.ElCmb.DataSource = noleggiC.GetAllAuto();
+            ucCmbTarga.ElCmb.DisplayMember = "Targa";
+            ucCmbTarga.ElCmb.ValueMember = "Targa";
+        }
+
+        private void impostaDataCorrente(object sender)
+        {
+            UCTxt uCTxt = (UCTxt)sender;
+            uCTxt.Text = DateTime.Now.ToString("dd/MM/yyyy");
+        }
+
+        private void btnInizioNow_Click(object sender, EventArgs e)
+        {
+            impostaDataCorrente(ucTxtDataInizio);
+        }
+
+        private void btnFineNow_Click(object sender, EventArgs e)
+        {
+            impostaDataCorrente(ucTxtDataFine);
         }
     }
 
