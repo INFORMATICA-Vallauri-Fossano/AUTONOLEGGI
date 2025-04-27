@@ -31,6 +31,7 @@
             this.btnAuto = new System.Windows.Forms.Button();
             this.btnNoleggi = new System.Windows.Forms.Button();
             this.btnClienti = new System.Windows.Forms.Button();
+            this.btnQueryCompito = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnAuto
@@ -63,15 +64,26 @@
             this.btnClienti.UseVisualStyleBackColor = true;
             this.btnClienti.Click += new System.EventHandler(this.btnClienti_Click);
             // 
-            // Menu
+            // btnQueryCompito
+            // 
+            this.btnQueryCompito.Location = new System.Drawing.Point(12, 150);
+            this.btnQueryCompito.Name = "btnQueryCompito";
+            this.btnQueryCompito.Size = new System.Drawing.Size(196, 40);
+            this.btnQueryCompito.TabIndex = 3;
+            this.btnQueryCompito.Text = "QUERY DI COMPITO";
+            this.btnQueryCompito.UseVisualStyleBackColor = true;
+            this.btnQueryCompito.Click += new System.EventHandler(this.btnQueryCompito_Click);
+            // 
+            // frmMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(220, 164);
+            this.ClientSize = new System.Drawing.Size(220, 204);
+            this.Controls.Add(this.btnQueryCompito);
             this.Controls.Add(this.btnClienti);
             this.Controls.Add(this.btnNoleggi);
             this.Controls.Add(this.btnAuto);
-            this.Name = "Menu";
+            this.Name = "frmMenu";
             this.Text = "Menu";
             this.ResumeLayout(false);
 
@@ -82,5 +94,6 @@
         private System.Windows.Forms.Button btnAuto;
         private System.Windows.Forms.Button btnNoleggi;
         private System.Windows.Forms.Button btnClienti;
+        private System.Windows.Forms.Button btnQueryCompito;
     }
 }

@@ -34,5 +34,11 @@ namespace esAutoNoleggi.View
             frmNoleggi noleggi = new frmNoleggi();
             noleggi.ShowDialog();
         }
+
+        private void btnQueryCompito_Click(object sender, EventArgs e)
+        {
+            frmQuery query = new frmQuery();
+            query.ShowDialog();
+        }
     }
 }

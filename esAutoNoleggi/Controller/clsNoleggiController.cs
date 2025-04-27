@@ -26,14 +26,14 @@ namespace esAutoNoleggi.Controller
         {
             //controllare la disponibilità
             string queryDisponibile = "SELECT COUNT(*) FROM AUTOMOBILI WHERE TARGA=@targa AND DISPONIBILE=1";
-            
-            SqlCommand cmdDisponibile= new SqlCommand();
+
+            SqlCommand cmdDisponibile = new SqlCommand();
             cmdDisponibile.CommandType = CommandType.Text;
             cmdDisponibile.CommandText = queryDisponibile;
 
             cmdDisponibile.Parameters.AddWithValue("@targa", targa);
 
-            if (Convert.ToInt32(ado.EseguiScalar(cmdDisponibile))==0) throw new Exception("L'auto non è disponibile per il noleggio");
+            if (Convert.ToInt32(ado.EseguiScalar(cmdDisponibile)) == 0) throw new Exception("L'auto non è disponibile per il noleggio");
             // Inserire il noleggio
             string queryNoleggio = "INSERT INTO NOLEGGI (IDCLIENTE, TARGA, DATAINIZIO, DATAFINE) " +
                                    "VALUES (@IDCLIENTE, @TARGA, @DATAINIZIO, @DATAFINE);";
@@ -50,7 +50,7 @@ namespace esAutoNoleggi.Controller
             ado.EseguiNonQuery(cmdNoleggio);
 
             // Aggiornare la disponibilità dell'auto se la datafine  è nulla
-            if (dataFine==null)
+            if (dataFine == null)
             {
                 string queryDisponibilita = "UPDATE AUTOMOBILI SET DISPONIBILE = 0 WHERE TARGA = @TARGA;";
                 SqlCommand cmdDisponibilita = new SqlCommand();
@@ -61,6 +61,19 @@ namespace esAutoNoleggi.Controller
                 ado.EseguiNonQuery(cmdDisponibilita);
             }
 
+        }
+        public DataTable GetQuery(string query, Dictionary<string, string> args)
+        {
+            SqlCommand sqlCommand = new SqlCommand();
+            sqlCommand.CommandType = CommandType.Text;
+            sqlCommand.CommandText = query;
+            if (args != null)
+                foreach (KeyValuePair<string, string> parameter in args)
+                {
+                    sqlCommand.Parameters.AddWithValue(parameter.Key, parameter.Value);
+                }
+            DataTable dt = ado.EseguiQuery(sqlCommand);
+            return dt;
         }
         /// <summary>
         /// Termina un noleggio aggiornando la data di fine e la disponibilità dell'auto.
@@ -74,10 +87,10 @@ namespace esAutoNoleggi.Controller
             SqlCommand cmdControllo = new SqlCommand();
             cmdControllo.CommandType = CommandType.Text;
             cmdControllo.CommandText = queryControllo;
-            
+
             cmdControllo.Parameters.AddWithValue("@IDNOLEGGIO", idNoleggio);
 
-            if(Convert.ToInt32(ado.EseguiScalar(cmdControllo)) > 0) throw new Exception("Il noleggio è già terminato");
+            if (Convert.ToInt32(ado.EseguiScalar(cmdControllo)) > 0) throw new Exception("Il noleggio è già terminato");
 
             // Aggiornare la data di fine del noleggio
             string queryNoleggio = "UPDATE NOLEGGI SET DATAFINE = @DATAFINE WHERE IDNOLEGGIO = @IDNOLEGGIO;";
@@ -148,6 +161,49 @@ namespace esAutoNoleggi.Controller
             cmd.CommandText = query;
             DataTable dt = ado.EseguiQuery(cmd);
             return dt;
+        }
+
+        internal void Paga(int idNoleggio)
+        {
+            //diminuzione del saldo del cliente altrimenti errore
+            string queryPrezzo = "SELECT PREZZO FROM AUTOMOBILI A RIGHT JOIN NOLEGGI N ON A.TARGA=N.TARGA WHERE N.IDNOLEGGIO=@id";
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = queryPrezzo;
+
+            cmd.Parameters.AddWithValue("@id", idNoleggio);
+
+            decimal prezzo = Convert.ToDecimal(ado.EseguiScalar(cmd));
+
+            string querySaldo = "SELECT SALDO FROM CLIENTI C RIGHT JOIN NOLEGGI N ON C.IDCLIENTE=N.IDCLIENTE WHERE N.IDNOLEGGIO=@id";
+            SqlCommand cmd2 = new SqlCommand();
+            cmd2.CommandType = CommandType.Text;
+            cmd2.CommandText = querySaldo;
+
+            cmd2.Parameters.AddWithValue("@id", idNoleggio);
+
+            decimal saldo = Convert.ToDecimal(ado.EseguiScalar(cmd2));
+
+            decimal nuovoSaldo = saldo - prezzo;
+
+            if(nuovoSaldo<0) throw new Exception("Il saldo del cliente non è sufficiente per pagare il noleggio");
+
+            // Aggiornare il saldo del cliente
+            string queryAggiornamento= "UPDATE CLIENTI SET SALDO=@nuovoSaldo WHERE IDCLIENTE=(SELECT IDCLIENTE FROM NOLEGGI WHERE IDNOLEGGIO=@id)";
+            // AGGIORNO LO STATO DEL NOLEGGIO TO PAGATO=1
+            string queryNoleggio = "UPDATE NOLEGGI SET PAGATO=1 WHERE IDNOLEGGIO=@id";
+            SqlCommand cmd3 = new SqlCommand();
+            cmd3.CommandType = CommandType.Text;
+            cmd3.CommandText = queryAggiornamento;
+            cmd3.Parameters.AddWithValue("@nuovoSaldo", nuovoSaldo);
+            cmd3.Parameters.AddWithValue("@id", idNoleggio);
+            ado.EseguiNonQuery(cmd3);
+            SqlCommand cmd4 = new SqlCommand();
+            cmd4.CommandType = CommandType.Text;
+            cmd4.CommandText = queryNoleggio;
+            cmd4.Parameters.AddWithValue("@id", idNoleggio);
+            ado.EseguiNonQuery(cmd4);
+
         }
     }
 }

@@ -36,20 +36,23 @@
             this.btnFineNow = new System.Windows.Forms.Button();
             this.lblIdNoleggio = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnPaga = new System.Windows.Forms.Button();
             this.grbOperazioni.SuspendLayout();
             this.grbDati.SuspendLayout();
             this.SuspendLayout();
             // 
             // grbOperazioni
             // 
+            this.grbOperazioni.Controls.Add(this.btnPaga);
             this.grbOperazioni.Controls.Add(this.label1);
             this.grbOperazioni.Controls.Add(this.lblIdNoleggio);
-            this.grbOperazioni.Size = new System.Drawing.Size(130, 160);
+            this.grbOperazioni.Size = new System.Drawing.Size(130, 194);
             this.grbOperazioni.Controls.SetChildIndex(this.lblIdNoleggio, 0);
             this.grbOperazioni.Controls.SetChildIndex(this.btnModifica, 0);
             this.grbOperazioni.Controls.SetChildIndex(this.btnEliminazione, 0);
             this.grbOperazioni.Controls.SetChildIndex(this.btnInserimento, 0);
             this.grbOperazioni.Controls.SetChildIndex(this.label1, 0);
+            this.grbOperazioni.Controls.SetChildIndex(this.btnPaga, 0);
             // 
             // grbDati
             // 
@@ -73,7 +76,7 @@
             // btnModifica
             // 
             this.btnModifica.Enabled = false;
-            this.btnModifica.Location = new System.Drawing.Point(5, 132);
+            this.btnModifica.Location = new System.Drawing.Point(5, 166);
             // 
             // ucTxtDataFine
             // 
@@ -145,11 +148,21 @@
             this.label1.TabIndex = 5;
             this.label1.Text = "ID";
             // 
+            // btnPaga
+            // 
+            this.btnPaga.Location = new System.Drawing.Point(5, 112);
+            this.btnPaga.Name = "btnPaga";
+            this.btnPaga.Size = new System.Drawing.Size(115, 23);
+            this.btnPaga.TabIndex = 6;
+            this.btnPaga.Text = "PAGA";
+            this.btnPaga.UseVisualStyleBackColor = true;
+            this.btnPaga.Click += new System.EventHandler(this.btnPaga_Click);
+            // 
             // frmNoleggi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(797, 557);
+            this.ClientSize = new System.Drawing.Size(797, 597);
             this.Name = "frmNoleggi";
             this.Text = "GESTIONE AUTOMOBILI DEL NOLEGGIO";
             this.Load += new System.EventHandler(this.frmNoleggi_Load);
@@ -170,6 +183,7 @@
         private System.Windows.Forms.Button btnInizioNow;
         private System.Windows.Forms.Label lblIdNoleggio;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnPaga;
     }
 }
 

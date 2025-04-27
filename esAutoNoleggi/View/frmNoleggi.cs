@@ -196,6 +196,19 @@ namespace esAutoNoleggi
         {
             impostaDataCorrente(ucTxtDataFine);
         }
+
+        private void btnPaga_Click(object sender, EventArgs e)
+        {
+            try
+            {
+            noleggiC.Paga(IdNoleggio);
+                dgv.DataSource = noleggiC.GetAllNoleggi();
+            }
+            catch (Exception ec)
+            {
+                MessageBox.Show(ec.Message);
+            }
+        }
     }
 
 }
