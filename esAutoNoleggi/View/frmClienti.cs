@@ -18,33 +18,26 @@ namespace esAutoNoleggi
     {
         clsClientiController clientiC;
         clsClienti cliente = new clsClienti();
-
+        public float Saldo
+        {
+            get => cliente.Saldo=(float)Convert.ToDecimal(ucTxtSaldo.Text);
+            set
+            {
+                cliente.Saldo = value;
+                ucTxtSaldo.Text = cliente.Saldo.ToString();
+            }
+        }
         public int IdCliente
         {
             get
             {
-                try
-                {
                     cliente.IdCliente = Convert.ToInt32(ucTxtIdCliente.Text);
                     return cliente.IdCliente;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in IdCliente");
-                    return 0; // Return a default value in case of an error
-                }
             }
             set
             {
-                try
-                {
                     cliente.IdCliente = value;
                     ucTxtIdCliente.Text = cliente.IdCliente.ToString();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in IdCliente");
-                }
             }
         }
 
@@ -52,28 +45,13 @@ namespace esAutoNoleggi
         {
             get
             {
-                try
-                {
                     cliente.Cognome = ucTxtCognome.Text;
                     return cliente.Cognome;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in Cognome");
-                    return string.Empty; // Return a default value in case of an error
-                }
             }
             set
             {
-                try
-                {
                     cliente.Cognome = value.Trim();
                     ucTxtCognome.Text = cliente.Cognome;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in Cognome");
-                }
             }
         }
 
@@ -81,28 +59,13 @@ namespace esAutoNoleggi
         {
             get
             {
-                try
-                {
                     cliente.Nome = ucTxtNome.Text;
                     return cliente.Nome;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in Nome");
-                    return string.Empty; // Return a default value in case of an error
-                }
             }
             set
             {
-                try
-                {
                     cliente.Nome = value.Trim();
                     ucTxtNome.Text = cliente.Nome;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in Nome");
-                }
             }
         }
 
@@ -110,28 +73,13 @@ namespace esAutoNoleggi
         {
             get
             {
-                try
-                {
                     cliente.Telefono = ucTxtTelefono.Text;
                     return cliente.Telefono;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in Telefono");
-                    return string.Empty; // Return a default value in case of an error
-                }
             }
             set
             {
-                try
-                {
                     cliente.Telefono = value.Trim();
                     ucTxtTelefono.Text = cliente.Telefono;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in Telefono");
-                }
             }
         }
 
@@ -139,28 +87,13 @@ namespace esAutoNoleggi
         {
             get
             {
-                try
-                {
                     cliente.Email = ucTxtEmail.Text;
                     return cliente.Email;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in Email");
-                    return string.Empty; // Return a default value in case of an error
-                }
             }
             set
             {
-                try
-                {
                     cliente.Email = value.Trim();
                     ucTxtEmail.Text = cliente.Email;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in Email");
-                }
             }
         }
 
@@ -218,30 +151,37 @@ namespace esAutoNoleggi
             }
         }
 
-        private void btnModificare_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                clientiC.ModificaCliente(IdCliente, Cognome, Nome, Telefono, Email);
-                dgv.DataSource = clientiC.VisualizzaTuttiClienti();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "ERRORE");
-            }
-        }
-
-
         override protected void setDgv(int index)
         {
             if (index >= 0)
             {
+                try
+                {
                 DataGridViewRow selectedRow = dgv.Rows[index];
                 IdCliente = Convert.ToInt32(selectedRow.Cells["IDCLIENTE"].Value);
                 Cognome = selectedRow.Cells["COGNOME"].Value.ToString();
                 Nome = selectedRow.Cells["NOME"].Value.ToString();
                 Telefono = selectedRow.Cells["TELEFONO"].Value.ToString();
                 Email = selectedRow.Cells["EMAIL"].Value.ToString();
+                    Saldo = (float)Convert.ToDecimal(selectedRow.Cells["SALDO"].Value.ToString());
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private void btnModifica_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                clientiC.ModificaCliente(IdCliente, Cognome, Nome, Telefono, Email, Saldo);
+                dgv.DataSource = clientiC.VisualizzaTuttiClienti();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

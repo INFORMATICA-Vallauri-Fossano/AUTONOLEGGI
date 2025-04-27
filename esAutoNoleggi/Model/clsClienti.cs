@@ -49,9 +49,10 @@ namespace esAutoNoleggi.Model
             get => telefono;
             set
             {
-                if (string.IsNullOrWhiteSpace(value) || !Regex.IsMatch(value, @"^\+?[0-9]{7,15}$"))
+                if(!string.IsNullOrWhiteSpace(value))
+                    if (!Regex.IsMatch(value, @"^\+?[0-9]{7,15}$"))
                     throw new ArgumentException("Telefono must be a valid phone number (7-15 digits, optional '+' prefix).");
-                telefono = value;
+                    telefono = value;
             }
         }
 
@@ -60,11 +61,14 @@ namespace esAutoNoleggi.Model
             get => eMail;
             set
             {
-                if (string.IsNullOrWhiteSpace(value) || !Regex.IsMatch(value, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                if (!string.IsNullOrWhiteSpace(value))
+                    if (!Regex.IsMatch(value, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
                     throw new ArgumentException("EMail must be a valid email address.");
                 eMail = value;
             }
         }
+
+        public float Saldo { get; internal set; }
 
         // Optional: Method to validate all properties at once
         public void Validate()

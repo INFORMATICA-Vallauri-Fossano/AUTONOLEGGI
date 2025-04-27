@@ -33,17 +33,28 @@
             this.ucTxtNome = new AnrangoRamosLibrary.UCTxt();
             this.ucTxtTelefono = new AnrangoRamosLibrary.UCTxt();
             this.ucTxtEmail = new AnrangoRamosLibrary.UCTxt();
+            this.ucTxtSaldo = new AnrangoRamosLibrary.UCTxt();
             this.grbOperazioni.SuspendLayout();
             this.grbDati.SuspendLayout();
             this.SuspendLayout();
             // 
+            // grbOperazioni
+            // 
+            this.grbOperazioni.Size = new System.Drawing.Size(130, 248);
+            // 
             // grbDati
             // 
+            this.grbDati.Controls.Add(this.ucTxtSaldo);
             this.grbDati.Controls.Add(this.ucTxtIdCliente);
             this.grbDati.Controls.Add(this.ucTxtCognome);
             this.grbDati.Controls.Add(this.ucTxtNome);
             this.grbDati.Controls.Add(this.ucTxtTelefono);
             this.grbDati.Controls.Add(this.ucTxtEmail);
+            this.grbDati.Size = new System.Drawing.Size(252, 248);
+            // 
+            // btnModifica
+            // 
+            this.btnModifica.Click += new System.EventHandler(this.btnModifica_Click);
             // 
             // ucTxtIdCliente
             // 
@@ -85,11 +96,19 @@
             this.ucTxtEmail.Size = new System.Drawing.Size(231, 28);
             this.ucTxtEmail.TabIndex = 10;
             // 
+            // ucTxtSaldo
+            // 
+            this.ucTxtSaldo.Label = "SALDO";
+            this.ucTxtSaldo.Location = new System.Drawing.Point(11, 199);
+            this.ucTxtSaldo.Name = "ucTxtSaldo";
+            this.ucTxtSaldo.Size = new System.Drawing.Size(231, 28);
+            this.ucTxtSaldo.TabIndex = 15;
+            // 
             // frmClienti
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(803, 616);
+            this.ClientSize = new System.Drawing.Size(803, 639);
             this.Name = "frmClienti";
             this.Text = "GESTIONE AUTOMOBILI DEL NOLEGGIO";
             this.Load += new System.EventHandler(this.frmAuto_Load);
@@ -106,6 +125,7 @@
         private AnrangoRamosLibrary.UCTxt ucTxtNome;
         private AnrangoRamosLibrary.UCTxt ucTxtTelefono;
         private AnrangoRamosLibrary.UCTxt ucTxtEmail;
+        private AnrangoRamosLibrary.UCTxt ucTxtSaldo;
     }
 }
 

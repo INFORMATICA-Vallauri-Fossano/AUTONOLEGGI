@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics.SymbolStore;
 
 namespace esAutoNoleggi.Controller
 {
@@ -47,9 +48,9 @@ namespace esAutoNoleggi.Controller
         /// <param name="nome">Il nuovo nome del cliente.</param>
         /// <param name="telefono">Il nuovo numero di telefono del cliente.</param>
         /// <param name="email">La nuova email del cliente.</param>
-        public void ModificaCliente(int idCliente, string cognome, string nome, string telefono, string email)
+        public void ModificaCliente(int idCliente, string cognome, string nome, string telefono, string email,float saldo)
         {
-            string query = "UPDATE CLIENTI SET COGNOME = @COGNOME, NOME = @NOME, TELEFONO = @TELEFONO, EMAIL = @EMAIL " +
+            string query = "UPDATE CLIENTI SET COGNOME = @COGNOME, NOME = @NOME, TELEFONO = @TELEFONO, EMAIL = @EMAIL, SALDO=@saldo " +
                            "WHERE IDCLIENTE = @IDCLIENTE;";
 
             SqlCommand cmd = new SqlCommand();
@@ -61,6 +62,7 @@ namespace esAutoNoleggi.Controller
             cmd.Parameters.AddWithValue("@NOME", nome);
             cmd.Parameters.AddWithValue("@TELEFONO", telefono);
             cmd.Parameters.AddWithValue("@EMAIL", email);
+            cmd.Parameters.AddWithValue("@saldo", saldo);
 
             ado.EseguiNonQuery(cmd);
         }
