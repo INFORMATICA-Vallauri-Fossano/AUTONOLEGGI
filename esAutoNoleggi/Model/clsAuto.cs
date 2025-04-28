@@ -11,6 +11,7 @@ namespace esAutoNoleggi.Model
         bool disponibile;
         int idModello;
         int idAl;
+        float prezzo;
 
         public string Targa
         {
@@ -78,6 +79,11 @@ namespace esAutoNoleggi.Model
                 idAl = value;
             }
         }
+
+        public float Prezzo { get=>prezzo; set {
+                if (value < 0) throw new ArgumentException("Prezzo cannot be negative.");
+                prezzo = (float)Math.Round(value, 2);
+            } }
 
         // Optional: Method to validate all properties at once
         public void Validate()

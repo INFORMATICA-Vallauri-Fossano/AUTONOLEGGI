@@ -30,7 +30,7 @@ namespace esAutoNoleggi.Controller
 
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "SELECT TARGA,MARCA, MODELLO, COLORE,ALIMENTAZIONE, KM,CAMBIOAUTOMATICO ";
+            cmd.CommandText = "SELECT TARGA,MARCA, MODELLO, COLORE,ALIMENTAZIONE, KM,CAMBIOAUTOMATICO,PREZZO ";
             cmd.CommandText += "FROM AUTOMOBILI, MARCHE, MODELLI, ALIMENTAZIONI ";
             cmd.CommandText += "WHERE DISPONIBILE=1 AND MARCHE.IDMARCA= MODELLI.IDMARCA ";
             cmd.CommandText += " AND MODELLI.IDMODELLO=AUTOMOBILI.IDMODELLO ";
@@ -81,14 +81,14 @@ namespace esAutoNoleggi.Controller
             return dt;
         }
 
-        public void InsertAuto(string targa, int km, string colore, bool cambioAutomatico, bool disponibile, int idModello, int idAl)
+        public void InsertAuto(string targa, int km, string colore, bool cambioAutomatico, bool disponibile, int idModello, int idAl,float prezzo)
         {
             if (TargaExists(targa))
                 throw new Exception("Targa dell'auto già presente");
 
             // Construct the SQL INSERT query with parameter placeholders
-            string query = "INSERT INTO AUTOMOBILI (TARGA, KM, COLORE, CAMBIOAUTOMATICO, DISPONIBILE, IDMODELLO, IDAL) " +
-                           "VALUES (@TARGA, @KM, @COLORE, @CAMBIOAUTOMATICO, @DISPONIBILE, @IDMODELLO, @IDAL);";
+            string query = "INSERT INTO AUTOMOBILI (TARGA, KM, COLORE, CAMBIOAUTOMATICO, DISPONIBILE, IDMODELLO, IDAL,PREZZO) " +
+                           "VALUES (@TARGA, @KM, @COLORE, @CAMBIOAUTOMATICO, @DISPONIBILE, @IDMODELLO, @IDAL,@prezzo);";
 
             // Create a new SqlCommand
             SqlCommand cmd = new SqlCommand();
@@ -103,6 +103,7 @@ namespace esAutoNoleggi.Controller
             cmd.Parameters.AddWithValue("@DISPONIBILE", disponibile);
             cmd.Parameters.AddWithValue("@IDMODELLO", idModello);
             cmd.Parameters.AddWithValue("@IDAL", idAl);
+            cmd.Parameters.AddWithValue("@prezzo", prezzo);
 
             // Execute the query
             ado.EseguiNonQuery(cmd);
@@ -122,10 +123,10 @@ namespace esAutoNoleggi.Controller
             ado.EseguiNonQuery(cmd);
         }
 
-        internal void EditAuto(string targa, int km, string colore, bool cambioAutomatico1, bool cambioAutomatico2, int modello, int alimentazione)
+        internal void EditAuto(string targa, int km, string colore, bool cambioAutomatico1, bool cambioAutomatico2, int modello, int alimentazione,float prezzo)
         {
             // Construct the SQL UPDATE query with parameter placeholders
-            string query = "UPDATE AUTOMOBILI SET KM = @KM, COLORE = @COLORE, CAMBIOAUTOMATICO = @CAMBIOAUTOMATICO, IDMODELLO = @IDMODELLO, IDAL = @IDAL WHERE TARGA = @TARGA;";
+            string query = "UPDATE AUTOMOBILI SET KM = @KM, COLORE = @COLORE, CAMBIOAUTOMATICO = @CAMBIOAUTOMATICO, IDMODELLO = @IDMODELLO, IDAL = @IDAL, prezzo = @prezzo WHERE TARGA = @TARGA;";
             // Create a new SqlCommand
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.Text;
@@ -137,6 +138,7 @@ namespace esAutoNoleggi.Controller
             cmd.Parameters.AddWithValue("@CAMBIOAUTOMATICO", cambioAutomatico1);
             cmd.Parameters.AddWithValue("@IDMODELLO", modello);
             cmd.Parameters.AddWithValue("@IDAL", alimentazione);
+            cmd.Parameters.AddWithValue("@prezzo", prezzo);
             // Execute the query
             ado.EseguiNonQuery(cmd);
         }

@@ -34,6 +34,7 @@
             this.ucNudKm = new AnrangoRamosLibrary.UCNud();
             this.chkCambioAutomatico = new System.Windows.Forms.CheckBox();
             this.ucTxtTarga = new AnrangoRamosLibrary.UCTxt();
+            this.ucNudPrezzo = new AnrangoRamosLibrary.UCNud();
             this.grbOperazioni.SuspendLayout();
             this.grbDati.SuspendLayout();
             this.SuspendLayout();
@@ -41,10 +42,12 @@
             // grbOperazioni
             // 
             this.grbOperazioni.Location = new System.Drawing.Point(9, 366);
+            this.grbOperazioni.Size = new System.Drawing.Size(130, 252);
             this.grbOperazioni.TabIndex = 11;
             // 
             // grbDati
             // 
+            this.grbDati.Controls.Add(this.ucNudPrezzo);
             this.grbDati.Controls.Add(this.ucCmbAlimentazione);
             this.grbDati.Controls.Add(this.ucCmbModello);
             this.grbDati.Controls.Add(this.ucTxtColore);
@@ -52,6 +55,7 @@
             this.grbDati.Controls.Add(this.ucTxtTarga);
             this.grbDati.Controls.Add(this.chkCambioAutomatico);
             this.grbDati.Location = new System.Drawing.Point(144, 366);
+            this.grbDati.Size = new System.Drawing.Size(252, 252);
             this.grbDati.TabIndex = 12;
             this.grbDati.Text = "DATI AUTO";
             // 
@@ -70,7 +74,7 @@
             // ucCmbAlimentazione
             // 
             this.ucCmbAlimentazione.Label = "ALIMENTAZIONE";
-            this.ucCmbAlimentazione.Location = new System.Drawing.Point(5, 154);
+            this.ucCmbAlimentazione.Location = new System.Drawing.Point(5, 188);
             this.ucCmbAlimentazione.Name = "ucCmbAlimentazione";
             this.ucCmbAlimentazione.Size = new System.Drawing.Size(231, 28);
             this.ucCmbAlimentazione.TabIndex = 21;
@@ -78,7 +82,7 @@
             // ucCmbModello
             // 
             this.ucCmbModello.Label = "MODELLO";
-            this.ucCmbModello.Location = new System.Drawing.Point(5, 120);
+            this.ucCmbModello.Location = new System.Drawing.Point(5, 154);
             this.ucCmbModello.Name = "ucCmbModello";
             this.ucCmbModello.Size = new System.Drawing.Size(231, 28);
             this.ucCmbModello.TabIndex = 20;
@@ -107,7 +111,7 @@
             // chkCambioAutomatico
             // 
             this.chkCambioAutomatico.AutoSize = true;
-            this.chkCambioAutomatico.Location = new System.Drawing.Point(106, 188);
+            this.chkCambioAutomatico.Location = new System.Drawing.Point(106, 222);
             this.chkCambioAutomatico.Name = "chkCambioAutomatico";
             this.chkCambioAutomatico.Size = new System.Drawing.Size(141, 17);
             this.chkCambioAutomatico.TabIndex = 10;
@@ -122,11 +126,24 @@
             this.ucTxtTarga.Size = new System.Drawing.Size(231, 28);
             this.ucTxtTarga.TabIndex = 17;
             // 
+            // ucNudPrezzo
+            // 
+            this.ucNudPrezzo.Label = "PREZZO";
+            this.ucNudPrezzo.Location = new System.Drawing.Point(5, 120);
+            this.ucNudPrezzo.Name = "ucNudPrezzo";
+            this.ucNudPrezzo.Size = new System.Drawing.Size(231, 28);
+            this.ucNudPrezzo.TabIndex = 22;
+            this.ucNudPrezzo.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            // 
             // frmAuto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(799, 596);
+            this.ClientSize = new System.Drawing.Size(799, 629);
             this.Name = "frmAuto";
             this.Text = "GESTIONE AUTOMOBILI DEL NOLEGGIO";
             this.Load += new System.EventHandler(this.frmAuto_Load);
@@ -145,6 +162,7 @@
         private AnrangoRamosLibrary.UCNud ucNudKm;
         private AnrangoRamosLibrary.UCTxt ucTxtTarga;
         private System.Windows.Forms.CheckBox chkCambioAutomatico;
+        private AnrangoRamosLibrary.UCNud ucNudPrezzo;
     }
 }
 

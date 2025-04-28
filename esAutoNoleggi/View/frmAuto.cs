@@ -23,28 +23,13 @@ namespace esAutoNoleggi
         {
             get
             {
-                try
-                {
                     auto.Targa = ucTxtTarga.Text;
                     return auto.Targa;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in Targa");
-                    return string.Empty; // Return a default value in case of an error
-                }
             }
             set
             {
-                try
-                {
                     auto.Targa = value.Trim().ToUpper();
                     ucTxtTarga.Text = auto.Targa;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in Targa");
-                }
             }
         }
 
@@ -52,28 +37,13 @@ namespace esAutoNoleggi
         {
             get
             {
-                try
-                {
                     auto.Km = (int)ucNudKm.Value;
                     return auto.Km;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in Km");
-                    return 0; // Return a default value in case of an error
-                }
             }
             set
             {
-                try
-                {
                     auto.Km = value;
                     ucNudKm.Value = auto.Km;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in Km");
-                }
             }
         }
 
@@ -81,28 +51,13 @@ namespace esAutoNoleggi
         {
             get
             {
-                try
-                {
                     auto.Colore = ucTxtColore.Text;
                     return auto.Colore;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in Colore");
-                    return string.Empty; // Return a default value in case of an error
-                }
             }
             set
             {
-                try
-                {
                     auto.Colore = value.Trim();
                     ucTxtColore.Text = auto.Colore;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in Colore");
-                }
             }
         }
 
@@ -110,28 +65,13 @@ namespace esAutoNoleggi
         {
             get
             {
-                try
-                {
                     auto.CambioAutomatico = chkCambioAutomatico.Checked;
                     return auto.CambioAutomatico;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in CambioAutomatico");
-                    return false; // Return a default value in case of an error
-                }
             }
             set
             {
-                try
-                {
                     auto.CambioAutomatico = value;
                     chkCambioAutomatico.Checked = auto.CambioAutomatico;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in CambioAutomatico");
-                }
             }
         }
 
@@ -139,28 +79,13 @@ namespace esAutoNoleggi
         {
             get
             {
-                try
-                {
                     auto.IdModello = Convert.ToInt32(ucCmbModello.ElCmb.SelectedValue);
                     return auto.IdModello;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in Modello");
-                    return 0; // Return a default value in case of an error
-                }
             }
             set
             {
-                try
-                {
                     auto.IdModello = value;
                     ucCmbModello.ElCmb.SelectedValue = auto.IdModello;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in Modello");
-                }
             }
         }
 
@@ -168,31 +93,28 @@ namespace esAutoNoleggi
         {
             get
             {
-                try
-                {
                     auto.IdAl = Convert.ToInt32(ucCmbAlimentazione.ElCmb.SelectedValue);
                     return auto.IdAl;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in Alimentazione");
-                    return 0; // Return a default value in case of an error
-                }
             }
             set
             {
-                try
-                {
                     auto.IdAl = value;
                     ucCmbAlimentazione.ElCmb.SelectedValue = auto.IdAl;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error in Alimentazione");
-                }
             }
         }
-
+        public float Prezzo
+        {
+            get
+            {
+                auto.Prezzo = (float)ucNudPrezzo.Value;
+                return auto.Prezzo;
+            }
+            set
+            {
+                auto.Prezzo = value;
+                ucNudPrezzo.Value = (decimal)auto.Prezzo;
+            }
+        }
 
         public frmAuto()
         {
@@ -228,7 +150,7 @@ namespace esAutoNoleggi
         {
             try
             {
-                autoC.InsertAuto(Targa, Km, Colore, CambioAutomatico, true, Modello, Alimentazione);
+                autoC.InsertAuto(Targa, Km, Colore, CambioAutomatico, true, Modello, Alimentazione,Prezzo);
                 dgv.DataSource = autoC.GetAllAuto();
             }
             catch (Exception ex)
@@ -255,7 +177,7 @@ namespace esAutoNoleggi
         {
             try
             {
-                autoC.EditAuto(Targa, Km, Colore, CambioAutomatico, CambioAutomatico, Modello, Alimentazione);
+                autoC.EditAuto(Targa, Km, Colore, CambioAutomatico, CambioAutomatico, Modello, Alimentazione,Prezzo);
                 dgv.DataSource = autoC.GetAllAuto();
             }
             catch (Exception ex)
@@ -278,6 +200,7 @@ namespace esAutoNoleggi
                 ucCmbAlimentazione.ElCmb.SelectedIndex = (ucCmbAlimentazione.ElCmb.FindString(selectedRow.Cells["ALIMENTAZIONE"].Value.ToString()));
                 auto.IdAl = (int)ucCmbAlimentazione.ElCmb.SelectedValue;
                 CambioAutomatico = Convert.ToBoolean(selectedRow.Cells["CAMBIOAUTOMATICO"].Value);
+                Prezzo = (float)Convert.ToDecimal(selectedRow.Cells["PREZZO"].Value);
             }
         }
     }

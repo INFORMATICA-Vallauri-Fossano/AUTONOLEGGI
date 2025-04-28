@@ -205,5 +205,29 @@ namespace esAutoNoleggi.Controller
             ado.EseguiNonQuery(cmd4);
 
         }
+
+        internal DataTable GetNoleggiByIdCliente(int idCliente)
+        {
+            DataTable dt = new DataTable();
+            string query = "SELECT * FROM NOLEGGI WHERE IDCLIENTE=@IDCLIENTE;";
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@IDCLIENTE", idCliente);
+            dt = ado.EseguiQuery(cmd);
+            return dt;
+        }
+
+        internal DataTable GetNoleggiNonTerminatiByIdCliente(int idCliente)
+        {
+            DataTable dt = new DataTable();
+            string query = "SELECT * FROM NOLEGGI WHERE IDCLIENTE=@IDCLIENTE AND DATAFINE IS NULL;";
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@IDCLIENTE", idCliente);
+            dt = ado.EseguiQuery(cmd);
+            return dt;
+        }
     }
 }

@@ -37,8 +37,11 @@
             this.lblIdNoleggio = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnPaga = new System.Windows.Forms.Button();
+            this.dgvNoleggiCliente = new System.Windows.Forms.DataGridView();
+            this.label2 = new System.Windows.Forms.Label();
             this.grbOperazioni.SuspendLayout();
             this.grbDati.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvNoleggiCliente)).BeginInit();
             this.SuspendLayout();
             // 
             // grbOperazioni
@@ -158,18 +161,43 @@
             this.btnPaga.UseVisualStyleBackColor = true;
             this.btnPaga.Click += new System.EventHandler(this.btnPaga_Click);
             // 
+            // dgvNoleggiCliente
+            // 
+            this.dgvNoleggiCliente.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvNoleggiCliente.Location = new System.Drawing.Point(480, 398);
+            this.dgvNoleggiCliente.Name = "dgvNoleggiCliente";
+            this.dgvNoleggiCliente.Size = new System.Drawing.Size(308, 187);
+            this.dgvNoleggiCliente.TabIndex = 23;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(480, 380);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(181, 13);
+            this.label2.TabIndex = 24;
+            this.label2.Text = "AUTO NOLEGGIATE DAL CLIENTE";
+            // 
             // frmNoleggi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(797, 597);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.dgvNoleggiCliente);
             this.Name = "frmNoleggi";
             this.Text = "GESTIONE AUTOMOBILI DEL NOLEGGIO";
             this.Load += new System.EventHandler(this.frmNoleggi_Load);
+            this.Controls.SetChildIndex(this.grbOperazioni, 0);
+            this.Controls.SetChildIndex(this.grbDati, 0);
+            this.Controls.SetChildIndex(this.dgvNoleggiCliente, 0);
+            this.Controls.SetChildIndex(this.label2, 0);
             this.grbOperazioni.ResumeLayout(false);
             this.grbOperazioni.PerformLayout();
             this.grbDati.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvNoleggiCliente)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -184,6 +212,8 @@
         private System.Windows.Forms.Label lblIdNoleggio;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnPaga;
+        private System.Windows.Forms.DataGridView dgvNoleggiCliente;
+        private System.Windows.Forms.Label label2;
     }
 }
 

@@ -123,6 +123,7 @@ namespace esAutoNoleggi
 
                 // Attach events
                 dgv.RowEnter += dgv_RowEnter;
+                ucCmbIdCliente.ElCmb.SelectedValueChanged += setDgvClient;
 
             }
             catch (Exception ex)
@@ -144,6 +145,10 @@ namespace esAutoNoleggi
                 ucCmbIdCliente.ElCmb.SelectedValue = Convert.ToInt32(selectedRow.Cells["IdCliente"].Value);
                 ucCmbTarga.ElCmb.SelectedValue = selectedRow.Cells["Targa"].Value.ToString();
             }
+        }
+        private void setDgvClient(object sender,EventArgs e)
+        {
+            dgvNoleggiCliente.DataSource = noleggiC.GetNoleggiNonTerminatiByIdCliente(IdCliente);
         }
 
         private void btnTermina_Click(object sender, EventArgs e)
