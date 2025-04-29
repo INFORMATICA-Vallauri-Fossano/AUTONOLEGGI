@@ -25,7 +25,7 @@ namespace esAutoNoleggi.Controller
         public void InserisciNoleggio(int idCliente, string targa, DateTime dataInizio, DateTime? dataFine)
         {
             //controllare la disponibilità
-            string queryDisponibile = "SELECT COUNT(*) FROM AUTOMOBILI WHERE TARGA=@targa AND DISPONIBILE=1";
+            string queryDisponibile = "SELECT COUNT(*) FROM AUTOMOBILI WHERE TARGA=@targa AND DISPONIBILE=1;";
 
             SqlCommand cmdDisponibile = new SqlCommand();
             cmdDisponibile.CommandType = CommandType.Text;
@@ -36,7 +36,7 @@ namespace esAutoNoleggi.Controller
             if (Convert.ToInt32(ado.EseguiScalar(cmdDisponibile)) == 0) throw new Exception("L'auto non è disponibile per il noleggio");
             // Inserire il noleggio
             string queryNoleggio = "INSERT INTO NOLEGGI (IDCLIENTE, TARGA, DATAINIZIO, DATAFINE) " +
-                                   "VALUES (@IDCLIENTE, @TARGA, @DATAINIZIO, @DATAFINE);";
+                                   "VALUES (@IDCLIENTE, @TARGA, @DATAINIZIO, @DATAFINE );";
 
             SqlCommand cmdNoleggio = new SqlCommand();
             cmdNoleggio.CommandType = CommandType.Text;
@@ -45,8 +45,10 @@ namespace esAutoNoleggi.Controller
             cmdNoleggio.Parameters.AddWithValue("@IDCLIENTE", idCliente);
             cmdNoleggio.Parameters.AddWithValue("@TARGA", targa);
             cmdNoleggio.Parameters.AddWithValue("@DATAINIZIO", dataInizio);
-            cmdNoleggio.Parameters.AddWithValue("@DATAFINE", dataFine);
-
+            if (dataFine.HasValue)
+                cmdNoleggio.Parameters.AddWithValue("@DATAFINE", dataFine.Value);
+            else
+                cmdNoleggio.Parameters.AddWithValue("@DATAFINE", DBNull.Value);
             ado.EseguiNonQuery(cmdNoleggio);
 
             // Aggiornare la disponibilità dell'auto se la datafine  è nulla
@@ -142,6 +144,15 @@ namespace esAutoNoleggi.Controller
             DataTable dt = ado.EseguiQuery(cmd);
             return dt;
         }
+        internal object GetAuto()
+        {
+            string query = "SELECT TARGA FROM AUTOMOBILI;";
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = query;
+            DataTable dt = ado.EseguiQuery(cmd);
+            return dt;
+        }
 
         internal object GetAllClienti()
         {
@@ -165,6 +176,15 @@ namespace esAutoNoleggi.Controller
 
         internal void Paga(int idNoleggio)
         {
+            //controllo che il volide non sia già stato pagato
+            string queGiaPagato = "SELECT COUNT(*) FROM NOLEGGI WHERE IDNOLEGGIO=@NOLEGGIO AND PAGATO=1";
+            SqlCommand cmdGiaPagato = new SqlCommand();
+            cmdGiaPagato.CommandType = CommandType.Text;
+            cmdGiaPagato.CommandText = queGiaPagato;
+            cmdGiaPagato.Parameters.AddWithValue("@NOLEGGIO", idNoleggio);
+
+            if (Convert.ToInt32(ado.EseguiScalar(cmdGiaPagato)) > 0) throw new Exception("Il noleggio è già stato pagato");
+
             //diminuzione del saldo del cliente altrimenti errore
             string queryPrezzo = "SELECT PREZZO FROM AUTOMOBILI A RIGHT JOIN NOLEGGI N ON A.TARGA=N.TARGA WHERE N.IDNOLEGGIO=@id";
             SqlCommand cmd = new SqlCommand();
@@ -206,14 +226,19 @@ namespace esAutoNoleggi.Controller
 
         }
 
-        internal DataTable GetNoleggiByIdCliente(int idCliente)
+        internal DataTable GetNoleggiByIdCliente(int idCliente,bool daPagare,bool daTerminare)
         {
             DataTable dt = new DataTable();
-            string query = "SELECT * FROM NOLEGGI WHERE IDCLIENTE=@IDCLIENTE;";
+            string query = "SELECT * FROM NOLEGGI WHERE IDCLIENTE=@IDCLIENTE ";
+            if (daPagare) query += "AND (PAGATO=@pagato ";
+            if (daTerminare) query += "AND DATAFINE IS NULL";
+            if(daPagare)query += ")";
+
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = query;
             cmd.Parameters.AddWithValue("@IDCLIENTE", idCliente);
+            if(daPagare)cmd.Parameters.AddWithValue("@pagato", !daPagare);
             dt = ado.EseguiQuery(cmd);
             return dt;
         }
@@ -228,6 +253,26 @@ namespace esAutoNoleggi.Controller
             cmd.Parameters.AddWithValue("@IDCLIENTE", idCliente);
             dt = ado.EseguiQuery(cmd);
             return dt;
+        }
+
+        internal DataTable GetAutoDisponibili()
+        {
+            string query = "SELECT * FROM AUTOMOBILI WHERE DISPONIBILE = 1";
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = query;
+
+            DataTable dt = ado.EseguiQuery(cmd);
+            return dt;  
+        }
+
+        internal string GetScalate(string query)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = query;
+            string scalate = ado.EseguiScalar(cmd).ToString();
+            return scalate;
         }
     }
 }

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ucTxtIdCliente = new AnrangoRamosLibrary.UCTxt();
             this.ucTxtCognome = new AnrangoRamosLibrary.UCTxt();
             this.ucTxtNome = new AnrangoRamosLibrary.UCTxt();
             this.ucTxtTelefono = new AnrangoRamosLibrary.UCTxt();
@@ -40,34 +39,33 @@
             // 
             // grbOperazioni
             // 
-            this.grbOperazioni.Size = new System.Drawing.Size(130, 248);
+            this.grbOperazioni.Size = new System.Drawing.Size(130, 194);
             // 
             // grbDati
             // 
             this.grbDati.Controls.Add(this.ucTxtSaldo);
-            this.grbDati.Controls.Add(this.ucTxtIdCliente);
             this.grbDati.Controls.Add(this.ucTxtCognome);
             this.grbDati.Controls.Add(this.ucTxtNome);
             this.grbDati.Controls.Add(this.ucTxtTelefono);
             this.grbDati.Controls.Add(this.ucTxtEmail);
-            this.grbDati.Size = new System.Drawing.Size(252, 248);
+            this.grbDati.Size = new System.Drawing.Size(252, 194);
+            // 
+            // btnInserimento
+            // 
+            this.btnInserimento.Click += new System.EventHandler(this.btnInserire_Click);
+            // 
+            // btnEliminazione
+            // 
+            this.btnEliminazione.Click += new System.EventHandler(this.btnElimina_Click);
             // 
             // btnModifica
             // 
             this.btnModifica.Click += new System.EventHandler(this.btnModifica_Click);
             // 
-            // ucTxtIdCliente
-            // 
-            this.ucTxtIdCliente.Label = "CLIENTE";
-            this.ucTxtIdCliente.Location = new System.Drawing.Point(11, 29);
-            this.ucTxtIdCliente.Name = "ucTxtIdCliente";
-            this.ucTxtIdCliente.Size = new System.Drawing.Size(231, 28);
-            this.ucTxtIdCliente.TabIndex = 14;
-            // 
             // ucTxtCognome
             // 
             this.ucTxtCognome.Label = "COGNOME";
-            this.ucTxtCognome.Location = new System.Drawing.Point(11, 63);
+            this.ucTxtCognome.Location = new System.Drawing.Point(5, 18);
             this.ucTxtCognome.Name = "ucTxtCognome";
             this.ucTxtCognome.Size = new System.Drawing.Size(231, 28);
             this.ucTxtCognome.TabIndex = 13;
@@ -75,7 +73,7 @@
             // ucTxtNome
             // 
             this.ucTxtNome.Label = "NOME";
-            this.ucTxtNome.Location = new System.Drawing.Point(11, 97);
+            this.ucTxtNome.Location = new System.Drawing.Point(5, 52);
             this.ucTxtNome.Name = "ucTxtNome";
             this.ucTxtNome.Size = new System.Drawing.Size(231, 28);
             this.ucTxtNome.TabIndex = 12;
@@ -83,7 +81,7 @@
             // ucTxtTelefono
             // 
             this.ucTxtTelefono.Label = "TELEFONO";
-            this.ucTxtTelefono.Location = new System.Drawing.Point(11, 131);
+            this.ucTxtTelefono.Location = new System.Drawing.Point(5, 86);
             this.ucTxtTelefono.Name = "ucTxtTelefono";
             this.ucTxtTelefono.Size = new System.Drawing.Size(231, 28);
             this.ucTxtTelefono.TabIndex = 11;
@@ -91,7 +89,7 @@
             // ucTxtEmail
             // 
             this.ucTxtEmail.Label = "EMAIL";
-            this.ucTxtEmail.Location = new System.Drawing.Point(11, 165);
+            this.ucTxtEmail.Location = new System.Drawing.Point(5, 120);
             this.ucTxtEmail.Name = "ucTxtEmail";
             this.ucTxtEmail.Size = new System.Drawing.Size(231, 28);
             this.ucTxtEmail.TabIndex = 10;
@@ -99,7 +97,7 @@
             // ucTxtSaldo
             // 
             this.ucTxtSaldo.Label = "SALDO";
-            this.ucTxtSaldo.Location = new System.Drawing.Point(11, 199);
+            this.ucTxtSaldo.Location = new System.Drawing.Point(5, 154);
             this.ucTxtSaldo.Name = "ucTxtSaldo";
             this.ucTxtSaldo.Size = new System.Drawing.Size(231, 28);
             this.ucTxtSaldo.TabIndex = 15;
@@ -108,7 +106,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(803, 639);
+            this.ClientSize = new System.Drawing.Size(803, 585);
             this.Name = "frmClienti";
             this.Text = "GESTIONE AUTOMOBILI DEL NOLEGGIO";
             this.Load += new System.EventHandler(this.frmAuto_Load);
@@ -119,8 +117,6 @@
         }
 
         #endregion
-
-        private AnrangoRamosLibrary.UCTxt ucTxtIdCliente;
         private AnrangoRamosLibrary.UCTxt ucTxtCognome;
         private AnrangoRamosLibrary.UCTxt ucTxtNome;
         private AnrangoRamosLibrary.UCTxt ucTxtTelefono;

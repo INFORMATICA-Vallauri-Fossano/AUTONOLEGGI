@@ -19,7 +19,7 @@ namespace esAutoNoleggi.Model
             set
             {
                 if (!AnrangoRamosLibrary.RegexUtilities.IsValidTarga(value))
-                    throw new ArgumentException("Targa must be a non-empty string with exactly 7 characters.");
+                    throw new ArgumentException("la targa deve rispettare il formato XX000XX, dove X è una lettera dell'alfabeto e lo zero può essere qualunque cifra");
                 targa = value;
             }
         }

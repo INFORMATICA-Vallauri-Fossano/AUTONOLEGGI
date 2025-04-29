@@ -29,16 +29,8 @@ namespace esAutoNoleggi
         }
         public int IdCliente
         {
-            get
-            {
-                    cliente.IdCliente = Convert.ToInt32(ucTxtIdCliente.Text);
-                    return cliente.IdCliente;
-            }
-            set
-            {
-                    cliente.IdCliente = value;
-                    ucTxtIdCliente.Text = cliente.IdCliente.ToString();
-            }
+            get=>cliente.IdCliente;
+            set=>cliente.IdCliente = value;
         }
 
         public string Cognome
